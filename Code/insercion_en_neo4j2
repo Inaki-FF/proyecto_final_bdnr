@@ -60,22 +60,3 @@ MATCH (s:Superhero),(se:Serie)
 WHERE s.id = se.id
 CREATE (s)-[:HERO_IN]->(se)
 
-
-
-#queries
-#¿a cuáles eventos asisten los superhéroes de una determinada serie?
-MATCH (se:Serie)-->(:Superhero)-->(e:Event)
-RETURN se.name as serieName, collect(distinct e.name)
-
-
-#¿super héroe con más comics?
-MATCH (s:Superhero)-->(c:Comic)
-WITH collect (DISTINCT c.name) AS comics, s.name as name, count(*) as cont
-RETURN name, cont
-ORDER BY cont desc
-
-#¿Qué evento junta más super héroes?
-MATCH (e:Event)-->(s:Superhero)
-WITH collect (DISTINCT s.name) AS heroes, e.name as event_name, count(*) as cont
-RETURN event_name, cont
-ORDER BY cont desc
